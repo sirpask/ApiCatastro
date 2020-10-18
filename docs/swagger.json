@@ -1,0 +1,100 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "description": "Esta API transforma un Numero de Referencia Catastral en una URL para googlemaps",
+        "title": "ref. Catastral a google Maps",
+        "termsOfService": "http://swagger.io/terms/",
+        "contact": {
+            "name": "sirpask",
+            "email": "el_pask@hotmail.com"
+        },
+        "license": {
+            "name": "Apache 2.0",
+            "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+        },
+        "version": "1.0"
+    },
+    "host": "localhost:8080",
+    "basePath": "/api/v1/",
+    "tags": [
+        {
+          "name": "id",
+          "description": "el numero de referencia catastral",
+          "externalDocs": {
+            "description": "¿Que es el numero de referencia catastral?",
+            "url": "http://www.catastro.meh.es/esp/referencia_catastral_1.asp"
+          }
+        },
+        {
+          "name": "url",
+          "description": "direccion de google que te devuelve el API"
+        }       
+      ],
+      "schemes": [
+        "https",
+        "http"
+      ],
+    "paths": {
+        "/urlgoogle/{id}": {
+            "get": {
+                "description": "transforma un numero catastral en una pagina de googlemaps",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "metes un numero de catastro y devuelve la pagina del googlemaps",
+                "operationId": "get-Url-by-string",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Numero referencia catastral",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/main.Url"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/main.HTTPError"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/main.HTTPError"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/main.HTTPError"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "main.Url": {
+            "type": "object",
+            "properties": {
+                "url": {
+                    "type": "string"
+                }
+            }
+        },
+        "main.HTTPError": {
+            "type": "object"
+        }
+    }
+}
